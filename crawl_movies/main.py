@@ -1,5 +1,7 @@
 from google.cloud import storage
 from config import CONFIG
+import json
+
 
 def crawl_page(request):
     try:
@@ -11,4 +13,4 @@ def crawl_page(request):
     except Exception as e:
         return str(e)
     
-    return 'hello-world'
+    return json.dumps(request.get_json())
