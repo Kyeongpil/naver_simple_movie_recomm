@@ -3,7 +3,7 @@ from config import CONFIG
 
 def crawl_page(request):
     try:
-        storage.Client(credentials=[...])
+        storage.Client()
         client = storage.Client(project=CONFIG['PROJECT_NAME'])
         bucket = client.get_bucket(CONFIG['CLOUD_STORAGE_BUCKET'])
         blob = bucket.blob('test.txt')
