@@ -63,12 +63,20 @@ def crawl_movie(request):
         }
         return result
 
-    story = b.find('div', {'class': 'story_area'})
-    # remove "줄거리"
-    story_title = story.find('div', {'class': 'title_area'})
-    if story_title is not None:
-        story_title.extract()
-    movie_dict['story'] = " ".join(story.text.split())
+    try:
+        story = b.find('div', {'class': 'story_area'})
+        # remove "줄거리"
+        story_title = story.find('div', {'class': 'title_area'})
+        if story_title is not None:
+            story_title.extract()
+        movie_dict['story'] = " ".join(story.text.split())
+    except:
+        result = {
+            'status': False, 
+            'code': movie_code, 
+            'e_type': 'movie story not exist'
+        }
+        return result
 
     res = requests.get(DETAIL_URL % movie_code)
     b = BeautifulSoup(res.text, 'lxml')
