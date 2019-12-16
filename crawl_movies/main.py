@@ -114,9 +114,5 @@ def crawl_movie(request):
         }
         return  json.dumps(result)
     
-    result = {
-        'status': 'success', 
-        'code': movie_code
-    }
-    
+    result = {'status': True, 'code': movie_code}
     return json.dumps(result)
