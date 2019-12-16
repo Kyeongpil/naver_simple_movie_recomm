@@ -18,6 +18,6 @@ def request_one(code):
 with Pool(PROCESS_NUM) as f:
     results = p.map(f, [i for i in range(MIN_MOVIE_ID, MAX_MOVIE_ID + 1)])
 
-results = [r for r in results if r['code']]
+results = [r for r in results if r['status']]
 
 print(f"finished - {len(results)}")
