@@ -10,9 +10,9 @@ BASIC_URL = "https://movie.naver.com/movie/bi/mi/basic.nhn?code=%d"
 DETAIL_URL = "https://movie.naver.com/movie/bi/mi/detail.nhn?code=%d"
 
 
-def crawl_movie(request):
-    r = request.get_json()
-    movie_code = r['code']
+def crawl_movie(movie_code):
+    # r = request.get_json()
+    # movie_code = r['code']
 
     movie_dict = {}
     res = requests.get(BASIC_URL % movie_code)
@@ -27,7 +27,7 @@ def crawl_movie(request):
             'code': movie_code, 
             'e_type': 'movie not exist'
         }
-        return result
+        return json.dumps(result)
 
     try:
         score = movie_info.find('div', {'class': 'main_score'})
@@ -44,7 +44,7 @@ def crawl_movie(request):
             'code': movie_code, 
             'e_type': 'movie score not exist'
         }
-        return result
+        return json.dumps(result)
 
     try:
         movie_info = b.find('dl', {'class': 'info_spec'})
@@ -61,7 +61,7 @@ def crawl_movie(request):
             'code': movie_code, 
             'e_type': 'movie info not enough'
         }
-        return result
+        return json.dumps(result)
 
     try:
         story = b.find('div', {'class': 'story_area'})
@@ -76,7 +76,7 @@ def crawl_movie(request):
             'code': movie_code, 
             'e_type': 'movie story not exist'
         }
-        return result
+        return json.dumps(result)
 
     res = requests.get(DETAIL_URL % movie_code)
     b = BeautifulSoup(res.text, 'lxml')
