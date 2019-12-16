@@ -10,9 +10,9 @@ BASIC_URL = "https://movie.naver.com/movie/bi/mi/basic.nhn?code=%d"
 DETAIL_URL = "https://movie.naver.com/movie/bi/mi/detail.nhn?code=%d"
 
 
-def crawl_movie(movie_code):
-    # r = request.get_json()
-    # movie_code = r['code']
+def crawl_movie(request):
+    r = request.get_json()
+    movie_code = r['code']
 
     movie_dict = {}
     res = requests.get(BASIC_URL % movie_code)
