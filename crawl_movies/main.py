@@ -84,21 +84,27 @@ def crawl_movie(request):
     movie_dict['actors'] = []
     actors = b.find('ul', {'class': 'lst_people'}).findAll('div', {'class': 'p_info'})
     for actor in actors:
-        actor_a = actor.find('a', {'class': 'k_name'})
-        code = actor_a['href'].split('=')[1]
-        name = " ".join(actor_a.text.split())
-        part = actor.find('em', {'class': 'p_part'}).text.split()
-        movie_dict['actors'].append({'code': code, 'name': name, 'part': part})
+        try:
+            actor_a = actor.find('a', {'class': 'k_name'})
+            code = actor_a['href'].split('=')[1]
+            name = " ".join(actor_a.text.split())
+            part = actor.find('em', {'class': 'p_part'}).text.split()
+            movie_dict['actors'].append({'code': code, 'name': name, 'part': part})
+        except TypeError:
+            continue
 
     movie_dict['directors'] = []
     directors = b.find('div', {'class': 'director'}).findAll('div', {'class': 'dir_obj'})
     for director in directors:
-        director_a = director.find('a', {'class': 'k_name'})
-        code = director_a['href'].split('=')[1]
-        name = " ".join(actor_a.text.split())
-        movie_dict['directors'].append({'code': code, 'name': name})
+        try:
+            director_a = director.find('a', {'class': 'k_name'})
+            code = director_a['href'].split('=')[1]
+            name = " ".join(actor_a.text.split())
+            movie_dict['directors'].append({'code': code, 'name': name})
+        except TypeError:
+            continue
 
-    # save info into storage
+    save info into storage
     try:
         storage.Client()
         client = storage.Client(project=CONFIG['PROJECT_NAME'])
