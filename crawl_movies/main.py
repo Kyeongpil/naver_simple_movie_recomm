@@ -104,7 +104,7 @@ def crawl_movie(request):
         except TypeError:
             continue
 
-    save info into storage
+    # save info into storage
     try:
         storage.Client()
         client = storage.Client(project=CONFIG['PROJECT_NAME'])
