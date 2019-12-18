@@ -82,7 +82,17 @@ def crawl_movie(request):
     b = BeautifulSoup(res.text, 'lxml')
 
     movie_dict['actors'] = []
-    actors = b.find('ul', {'class': 'lst_people'}).findAll('div', {'class': 'p_info'})
+    try:
+        actors = b.find('ul', {'class': 'lst_people'}).findAll('div', {'class': 'p_info'})
+        assert len(actors) > 0
+    except:
+        result = {
+            'status': False, 
+            'code': movie_code, 
+            'e_type': 'cannot find actors'
+        }
+        return json.dumps(result)
+
     for actor in actors:
         try:
             actor_a = actor.find('a', {'class': 'k_name'})
@@ -94,7 +104,17 @@ def crawl_movie(request):
             continue
 
     movie_dict['directors'] = []
-    directors = b.find('div', {'class': 'director'}).findAll('div', {'class': 'dir_obj'})
+    try:
+        directors = b.find('div', {'class': 'director'}).findAll('div', {'class': 'dir_obj'})
+        assert len(directors) > 0
+    except:
+        result = {
+            'status': False, 
+            'code': movie_code, 
+            'e_type': 'cannot find directors'
+        }
+        return json.dumps(result)
+    
     for director in directors:
         try:
             director_a = director.find('a', {'class': 'k_name'})
