@@ -131,7 +131,7 @@ def crawl_movie(request):
         bucket = client.get_bucket(CONFIG['CLOUD_STORAGE_BUCKET'])
         blob = bucket.blob(f'movie_{movie_code}.json')
         blob.upload_from_string(json.dumps(movie_dict))
-    except Exception as e:
+    except Exception:
         result = {
             'status': False, 
             'code': movie_code, 

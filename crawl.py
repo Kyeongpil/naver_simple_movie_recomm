@@ -18,9 +18,7 @@ def request_one(code):
     try:
         res = json.loads(res.text)
     except:
-        print(code)
-        print(res.status_code)
-        print(res.text)
+        res = {}
     return res
 
 
@@ -31,5 +29,5 @@ with Pool(PROCESS_NUM) as p:
                     total=len(movie_codes)):
         results.append(result)
 
-results = [r for r in results if r['status']]
+results = [r for r in results if r.get('status', None) == True]
 print(f"finished - {len(results)} movies collected")
