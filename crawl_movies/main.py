@@ -126,7 +126,6 @@ def crawl_movie(request):
 
     # save info into storage
     try:
-        storage.Client()
         client = storage.Client(project=CONFIG['PROJECT_NAME'])
         bucket = client.get_bucket(CONFIG['CLOUD_STORAGE_BUCKET'])
         blob = bucket.blob(f'movie_{movie_code}.json')
@@ -142,3 +141,5 @@ def crawl_movie(request):
     
     result = {'status': True, 'code': movie_code}
     return json.dumps(result)
+
+
