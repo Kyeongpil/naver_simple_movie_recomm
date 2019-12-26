@@ -2,3 +2,10 @@ My First Project-a8fa96d92514.json
 **.pyc
 **/test.py
 .vscode/settings.json
+**/**.json
+m.model
+m.vocab
+story.txt
+.DS_Store
+meta_data.pkl
+**/**checkpoint.*
